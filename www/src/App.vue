@@ -4,13 +4,11 @@
       <div class="container">
         <b-navbar-nav>
           <b-nav-item href="#">
-            FFProbe
+            Video Competition Test
           </b-nav-item>
         </b-navbar-nav>
       </div>
     </b-navbar>
-
-    <GitHubCorner />
 
     <div id="app" class="container">
       <File />
