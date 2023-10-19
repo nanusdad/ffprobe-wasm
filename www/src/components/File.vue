@@ -51,7 +51,6 @@
 
       <div v-if="data">
         <div v-if="file">Selected file: {{ file ? `${file.name}: ${file.size} bytes` : '' }}</div>
-        <div v-if="file">Details file: {{ file }}</div>
         <div v-else>URL: {{ url ? `${url} (${size} bytes)` : '' }}</div>
 
         <b-tabs class="mt-4" v-model="tabIndex">
@@ -60,9 +59,6 @@
               <Overview :info="data" />
             </div>
           </b-tab>
-          <b-tab v-if="file.type !== 'audio/mpeg'" title="Frames" class="mt-2" lazy>
-            <Frames :file="file" />
-          </b-tab>
         </b-tabs>
       </div>
     </div>
@@ -70,13 +66,11 @@
 
 <script>
 import Overview from './Overview.vue';
-import Frames from './Frames.vue';
 
 export default {
   name: 'File',
   components: {
     Overview,
-    Frames,
   },
   data() {
     return {
@@ -101,12 +95,14 @@ export default {
   },
   methods: {
     onFile(event) {
+      console.log('in onFile method');
       this.tabIndex = 0;
       this.$worker.onmessage = (e) => {
         this.data = e.data;
       }
       const file = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0];
       this.$worker.postMessage([ 'get_file_info', file ]);
+      console.log(file);
     },
     onDownload() {
       this.showProgress = true;
@@ -124,6 +120,9 @@ export default {
         this.progress = 100;
         this.file = new File([event.target.response], "file");
         this.size = this.file.size;
+        console.log('in onDownload onload');
+        console.log(this.file);
+        console.log(this.size);
         this.$worker.postMessage([ 'get_file_info', this.file ]);
         setTimeout(() => { this.showProgress = false; }, 2000);
       }
