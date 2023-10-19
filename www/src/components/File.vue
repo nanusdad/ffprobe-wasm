@@ -2,7 +2,7 @@
     <div class="file">
       <b-form-row>
         <b-col>
-          <b-form-group label="Select a file:" label-for="file">
+          <b-form-group label="Drop a file:" label-for="file">
             <b-input-group>
               <b-form-select class="protocol" v-model="protocol">
                 <option v-for="o in protocols" :key="o.id" :value="o.value">{{ o.name }}</option>
@@ -51,6 +51,7 @@
 
       <div v-if="data">
         <div v-if="file">Selected file: {{ file ? `${file.name}: ${file.size} bytes` : '' }}</div>
+        <div v-if="file">Details file: {{ file }}</div>
         <div v-else>URL: {{ url ? `${url} (${size} bytes)` : '' }}</div>
 
         <b-tabs class="mt-4" v-model="tabIndex">
