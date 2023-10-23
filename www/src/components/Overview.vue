@@ -8,6 +8,7 @@
       <b-row class="mb-2">
         <b-col> {{ item }} 
           <div v-if="item.duration > 100">RED</div>
+          <div v-if="item.duration > 31788130">GREEN</div>
         </b-col>
       </b-row>
     </div>
